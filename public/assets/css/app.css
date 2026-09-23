@@ -1,0 +1,264 @@
+/* this file handle a little of site style  */
+/*  Bootstrap handles most of the layout, this file only adds a few small touches (fonts, colors, the photo gallery grid) */
+
+
+:root{
+    --glow-color: rgb(217, 176 , 255); 
+    --glow-spread-color : rgba(191, 123, 255, 0.781); 
+    --enhanced-glow-color: rgb(231, 206, 255); 
+    --btn-color:rgb(100, 61, 136);
+}
+
+body {
+    font-family: "Roboto", Arial, sans-serif;
+    color: #222;
+    background-color: white;
+}
+a{
+    text-decoration: none;
+    color: #5104a9;
+}
+.site-navbar {
+    border-bottom: 1px solid #ddd;
+    padding: 15px; 
+    background: linear-gradient(to bottom , #020410 0% , #050b24 60% ,  #030d46 80% , #045bb8 95% , #029bba 100%);
+    color:white;
+
+}
+
+.navbar-brand{
+    font-weight: bold;
+    font-size: 23px;
+}
+.nav-item a{
+    color: rgb(199, 217, 255);
+    font-size: 18px;
+}
+.nav-item a:hover{
+    color: white;
+}
+
+
+.hero-section,
+.inner-hero {
+    padding: 3rem 0;
+    background-color: #e0f1fa62;
+    border-bottom: 1px solid #ddd;
+}
+
+.section-padding {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.section-title {
+    font-weight: 700;
+}
+
+.stat-row {
+    color: #555;
+}
+
+/* Auth pages (login / register) */
+.auth-page {
+    padding: 3rem 0;
+    background-color: #e0f1fa62;
+
+}
+
+.auth-box {
+    padding: 2rem;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Photo cards used in the gallery and home page */
+.photo-card {
+    display: block;
+    position: relative;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+    background: #fff;
+    border: 2px solid #edf5ff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.photo-card-body a:not(.stretched-link) {
+    text-decoration: none;
+}
+
+.photo-card-body a:not(.stretched-link):hover {
+    text-decoration: underline;
+}
+
+.photo-card:hover {
+    color: inherit;
+    border-color: #dfdde0;
+}
+
+.photo-card-image {
+    height: 220px;
+    background: #e0e0e0;
+}
+
+.photo-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.photo-card-body {
+    padding: 1rem;
+}
+
+.photo-card-body h2,
+.photo-card-body h3 {
+    font-size: 1.1rem;
+    margin-bottom: .25rem;
+}
+
+.photo-card-body p {
+    margin-bottom: 0;
+    color: #666;
+    font-size: .9rem;
+}
+
+.photo-list-description {
+    color: #666;
+    font-size: .9rem;
+}
+
+/* Gallery display styles (grid-3, grid-4, list, featured) */
+.gallery-grid {
+    display: grid;
+    gap: 1.25rem;
+}
+
+.gallery-style-grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.gallery-style-grid-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.gallery-style-list {
+    grid-template-columns: 1fr;
+}
+
+.gallery-style-list .photo-card {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+}
+
+.gallery-style-list .photo-card-image {
+    height: 150px;
+}
+
+.gallery-style-featured {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.gallery-style-featured .photo-card:first-child {
+    grid-column: span 2;
+}
+
+.gallery-style-featured .photo-card:first-child .photo-card-image {
+    height: 320px;
+}
+
+.empty-state {
+    padding: 3rem 1rem;
+    text-align: center;
+    background: #fff;
+    border: 1px dashed #ccc;
+    border-radius: 4px;
+}
+
+/* Photo detail page */
+.detail-image-frame {
+    background: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.detail-image-frame img {
+    display: block;
+    width: 100%;
+    max-height: 520px;
+    object-fit: cover;
+}
+
+/* Comments */
+.comment-list {
+    margin-top: 1rem;
+}
+
+.comment-item {
+    display: flex;
+    gap: .75rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+
+/* Upload page image preview */
+.upload-preview canvas {
+    display: block;
+    width: 100%;
+    max-height: 260px;
+    object-fit: contain;
+    background: #e0e0e0;
+    border-radius: 4px;
+}
+
+/* About page */
+.about-card {
+    padding: 1.25rem;
+    margin-bottom: 1rem;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.site-footer {
+    padding: 1.5rem 0;
+    margin-top: 2em;
+    border-top: 1px solid #ddd;
+    color: grey;
+    font-size: .9rem;
+    background: linear-gradient(to top , #020410 0% , #050b24 60% ,  #030d46 80% , #045bb8 95% , #029bba 100%);
+
+}
+
+.error-page {
+    padding: 4rem 0;
+    text-align: center;
+}
+
+@media (max-width: 767.98px) {
+    .gallery-style-grid-3,
+    .gallery-style-grid-4,
+    .gallery-style-featured {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .gallery-style-list .photo-card {
+        grid-template-columns: 130px 1fr;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .gallery-style-grid-3,
+    .gallery-style-grid-4,
+    .gallery-style-featured {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-style-list .photo-card {
+        grid-template-columns: 1fr;
+    }
+}
