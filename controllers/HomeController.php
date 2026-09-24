@@ -1,7 +1,7 @@
-<!-- Landing page and About Us page -->
-
 <?php
-
+/**
+ * Landing page and About Us page
+ */
 
 class HomeController extends Controller
 {

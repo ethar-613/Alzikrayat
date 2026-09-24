@@ -1,7 +1,7 @@
-<!-- User model, handles all SQL for the users table -->
-
 <?php
-
+/**
+ * User model, handles all SQL for the users table.
+ */
 
 class User extends Model
 {
@@ -68,5 +68,19 @@ class User extends Model
     public function count()
     {
         return (int) $this->database->query('SELECT COUNT(*) FROM users')->fetchColumn();
+    }
+
+    // Every other registered user, used to build the "tag people" checklist
+    public function allExcept($userId)
+    {
+        $statement = $this->database->prepare(
+            'SELECT id, first_name, last_name
+             FROM users
+             WHERE id != :user_id
+             ORDER BY first_name ASC, last_name ASC'
+        );
+        $statement->execute(array('user_id' => $userId));
+
+        return $statement->fetchAll();
     }
 }

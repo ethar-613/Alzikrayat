@@ -6,7 +6,7 @@ USE alzikrayat;
 
 
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY ,
     first_name VARCHAR(50) NOT NULL ,
     last_name VARCHAR(50) NOT NULL ,
@@ -19,7 +19,7 @@ CREATE TABLE users (
     INDEX idx_users_email (email)
 );
 
-CREATE TABLE photos(
+CREATE TABLE IF NOT EXISTS photos(
     id INT AUTO_INCREMENT PRIMARY KEY ,
     user_id INT NOT NULL ,
     file_name VARCHAR(255) NOT NULL ,
@@ -33,7 +33,7 @@ CREATE TABLE photos(
 );
 
 
-CREATE TABLE comments(
+CREATE TABLE IF NOT EXISTS comments(
     id INT AUTO_INCREMENT PRIMARY KEY ,
     photo_id INT NOT NULL ,
     user_id INT NOT NULL ,
@@ -45,4 +45,23 @@ CREATE TABLE comments(
               FOREIGN KEY (user_id) REFERENCES Users(id) ON DELETE CASCADE ON UPDATE CASCADE,
     INDEX idx_comments_photo_id (photo_id),
     INDEX idx_comments_user_id (user_id)
+)
+
+
+
+CREATE TABLE IF NOT EXISTS photo_tags (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    photo_id INT UNSIGNED NOT NULL,
+    user_id INT UNSIGNED NOT NULL,
+    date_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    UNIQUE KEY uq_photo_tags (photo_id, user_id),
+    KEY idx_photo_tags_photo_id (photo_id),
+    KEY idx_photo_tags_user_id (user_id),
+    CONSTRAINT fk_photo_tags_photo
+        FOREIGN KEY (photo_id) REFERENCES photos (id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_photo_tags_user
+        FOREIGN KEY (user_id) REFERENCES users (id)
+        ON DELETE CASCADE ON UPDATE CASCADE
 )

@@ -2,25 +2,52 @@
 // Only show the delete button to the person who actually owns this photo
 $isOwner = $currentUser !== null && (int) $currentUser['id'] === (int) $photo['user_id'];
 ?>
-<section class="container section-padding photo-detail-page">
+<section class="container section-padding">
     <div class="mb-4">
-        <a class="back-link" href="<?= e(url('/photos')) ?>">← Back to gallery</a>
+        <a href="<?= e(url('/photos')) ?>">&laquo; Back to gallery</a>
     </div>
-    <div class="row g-5 align-items-start">
+    <div class="row g-4 align-items-start">
         <div class="col-lg-7">
             <div class="detail-image-frame">
                 <img src="<?= e(uploadUrl((string) $photo['file_name'])) ?>" alt="<?= e((string) $photo['title']) ?>">
             </div>
         </div>
         <div class="col-lg-5">
-            <span class="eyebrow">A shared memory</span>
-            <h1 class="detail-title"><?= e((string) $photo['title']) ?></h1>
-            <div class="detail-meta">Captured by <strong><?= e((string) $photo['first_name']) ?> <?= e((string) $photo['last_name']) ?></strong> · <?= e(date('M j, Y', strtotime((string) $photo['date_time']))) ?></div>
+            <h1><?= e((string) $photo['title']) ?></h1>
+            <p class="text-muted">By <strong><a href="<?= e(url('/user/' . $photo['user_id'])) ?>"><?= e((string) $photo['first_name']) ?> <?= e((string) $photo['last_name']) ?></a></strong> - <?= e(date('M j, Y', strtotime((string) $photo['date_time']))) ?></p>
             <?php if (!empty($photo['description'])): ?>
-                <p class="detail-description"><?= nl2br(e((string) $photo['description'])) ?></p>
+                <p><?= nl2br(e((string) $photo['description'])) ?></p>
             <?php endif; ?>
+
+            <div id="tags">
+                <?php if (!empty($taggedUsers)): ?>
+                    <p class="mb-2">
+                        <strong>Tagged:</strong>
+                        <?php foreach ($taggedUsers as $index => $taggedUser): ?><?= $index > 0 ? ', ' : ' ' ?><a href="<?= e(url('/user/' . $taggedUser['id'])) ?>"><?= e((string) $taggedUser['first_name']) ?> <?= e((string) $taggedUser['last_name']) ?></a><?php endforeach; ?>
+                    </p>
+                <?php endif; ?>
+
+                <?php if (!empty($taggableUsers)): ?>
+                    <details class="mb-3">
+                        <summary class="text-muted" style="cursor: pointer;">Tag people in this photo</summary>
+                        <form method="post" action="<?= e(url('/photo/' . $photo['id'] . '/tags')) ?>" class="mt-2">
+                            <?= csrfField() ?>
+                            <div class="tag-checklist border rounded p-2 mb-2">
+                                <?php foreach ($taggableUsers as $user): ?>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="tags[]" value="<?= e((string) $user['id']) ?>" id="show_tag_<?= e((string) $user['id']) ?>">
+                                        <label class="form-check-label" for="show_tag_<?= e((string) $user['id']) ?>"><?= e((string) $user['first_name']) ?> <?= e((string) $user['last_name']) ?></label>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                            <button class="btn btn-outline-secondary btn-sm" type="submit">Add Tags</button>
+                        </form>
+                    </details>
+                <?php endif; ?>
+            </div>
+
             <?php if ($isOwner): ?>
-                <form method="post" action="<?= e(url('/photo/' . $photo['id'] . '/delete')) ?>" class="mt-4" onsubmit="return confirm('Delete this photo and its comments?');">
+                <form method="post" action="<?= e(url('/photo/' . $photo['id'] . '/delete')) ?>" class="mt-3" onsubmit="return confirm('Delete this photo and its comments?');">
                     <?= csrfField() ?>
                     <button class="btn btn-outline-danger btn-sm" type="submit">Delete this photo</button>
                 </form>
@@ -28,44 +55,38 @@ $isOwner = $currentUser !== null && (int) $currentUser['id'] === (int) $photo['u
         </div>
     </div>
 
-    <div class="row justify-content-center mt-5 pt-4" id="comments">
+    <div class="row justify-content-center mt-5 pt-3" id="comments">
         <div class="col-lg-8">
-            <div class="comments-heading d-flex justify-content-between align-items-end gap-3">
-                <div>
-                    <span class="eyebrow">The conversation</span>
-                    <h2 class="section-title mb-0">Notes from the gallery</h2>
-                </div>
-                <span class="comment-count"><?= e((string) count($comments)) ?></span>
-            </div>
+            <h2 class="section-title mb-3">Comments (<?= e((string) count($comments)) ?>)</h2>
 
             <?php if ($comments === []): ?>
-                <div class="comment-empty">No notes yet. Be the first person to leave one.</div>
+                <p class="text-muted">No comments yet. Be the first to leave one!</p>
             <?php else: ?>
                 <div class="comment-list">
                     <?php foreach ($comments as $comment): ?>
-                        <article class="comment-item">
+                        <div class="comment-item">
                             <div class="comment-avatar"><?= e(strtoupper(substr((string) $comment['first_name'], 0, 1))) ?></div>
                             <div>
-                                <div class="comment-author"><?= e((string) $comment['first_name']) ?> <?= e((string) $comment['last_name']) ?> <span><?= e(date('M j, Y · g:i a', strtotime((string) $comment['date_time']))) ?></span></div>
-                                <p><?= nl2br(e((string) $comment['comment'])) ?></p>
+                                <div><strong><a href="<?= e(url('/user/' . $comment['user_id'])) ?>"><?= e((string) $comment['first_name']) ?> <?= e((string) $comment['last_name']) ?></a></strong> <small class="text-muted"><?= e(date('M j, Y g:i a', strtotime((string) $comment['date_time']))) ?></small></div>
+                                <p class="mb-0"><?= nl2br(e((string) $comment['comment'])) ?></p>
                             </div>
-                        </article>
+                        </div>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
 
             <?php if ($currentUser !== null): ?>
-                <form class="comment-form mt-4" method="post" action="<?= e(url('/photo/' . $photo['id'] . '/comments')) ?>" data-validate-form novalidate>
+                <form class="mt-4" method="post" action="<?= e(url('/photo/' . $photo['id'] . '/comments')) ?>" data-validate-form novalidate>
                     <?= csrfField() ?>
-                    <label class="form-label" for="comment">Leave a note</label>
-                    <textarea class="form-control <?= isset($errors['comment']) ? 'is-invalid' : '' ?>" id="comment" name="comment" rows="3" maxlength="2000" required placeholder="Say something kind or curious..."></textarea>
+                    <label class="form-label" for="comment">Add a comment</label>
+                    <textarea class="form-control <?= isset($errors['comment']) ? 'is-invalid' : '' ?>" id="comment" name="comment" rows="3" maxlength="2000" required placeholder="Write a comment..."></textarea>
                     <?php if (isset($errors['comment'])): ?><div class="invalid-feedback"><?= e($errors['comment']) ?></div><?php endif; ?>
-                    <button class="btn btn-dark mt-3" type="submit">Add comment <span aria-hidden="true">→</span></button>
+                    <button class="btn btn-primary mt-2" type="submit">Add Comment</button>
                 </form>
             <?php else: ?>
-                <div class="login-comment-prompt mt-4">
+                <div class="alert alert-light border mt-4 d-flex justify-content-between align-items-center">
                     <span>Want to join the conversation?</span>
-                    <a href="<?= e(url('/login')) ?>">Log in to comment →</a>
+                    <a href="<?= e(url('/login')) ?>">Log in to comment</a>
                 </div>
             <?php endif; ?>
         </div>

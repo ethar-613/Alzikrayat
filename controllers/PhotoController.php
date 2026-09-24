@@ -1,7 +1,7 @@
-Gallery, photo upload, photo detail page, and delete (for owner only)
-
 <?php
-
+/**
+ * Gallery, photo upload, photo detail page, and delete (owner only)
+ */
 
 class PhotoController extends Controller
 {
@@ -35,10 +35,18 @@ class PhotoController extends Controller
             Response::notFound('This photo does not exist.');
         }
 
+        $currentUser = Auth::user();
+        $taggableUsers = array();
+        if ($currentUser !== null && (int) $photo['user_id'] === (int) $currentUser['id']) {
+            $taggableUsers = (new User())->allExcept((int) $currentUser['id']);
+        }
+
         $this->render('photos/show', array(
             'title' => $photo['title'],
             'photo' => $photo,
             'comments' => (new Comment())->forPhoto($photoId),
+            'taggedUsers' => (new Tag())->forPhoto($photoId),
+            'taggableUsers' => $taggableUsers,
             'errors' => array(),
         ));
     }
@@ -50,6 +58,7 @@ class PhotoController extends Controller
         $this->render('photos/create', array(
             'title' => 'Share a memory',
             'errors' => array(),
+            'taggableUsers' => (new User())->allExcept(Auth::id()),
         ));
     }
 
@@ -79,6 +88,7 @@ class PhotoController extends Controller
             $this->render('photos/create', array(
                 'title' => 'Share a memory',
                 'errors' => $errors,
+                'taggableUsers' => (new User())->allExcept(Auth::id()),
             ));
             return;
         }
@@ -117,8 +127,43 @@ class PhotoController extends Controller
             throw $exception;
         }
 
+        // tag other registered users selected during upload
+        $taggedUserIds = Request::input('tags', array());
+        if (is_array($taggedUserIds) && !empty($taggedUserIds)) {
+            (new Tag())->tagUsers($photoId, $taggedUserIds);
+        }
+
         Session::flash('success', 'Your photo has been added to the gallery.');
         redirect('/photo/' . $photoId);
+    }
+
+    // Lets the photo owner tag more registered users after the upload
+    public function addTags($id)
+    {
+        Auth::requireAuth();
+        verifyCsrf();
+
+        $photoId = filter_var($id, FILTER_VALIDATE_INT, array('options' => array('min_range' => 1)));
+        if ($photoId === false) {
+            Response::notFound();
+        }
+
+        $photo = (new Photo())->findWithAuthor($photoId);
+        if ($photo === null) {
+            Response::notFound('This photo does not exist.');
+        }
+
+        if ((int) $photo['user_id'] !== Auth::id()) {
+            Response::forbidden('Only the photo owner can tag people in this photo.');
+        }
+
+        $taggedUserIds = Request::input('tags', array());
+        if (is_array($taggedUserIds) && !empty($taggedUserIds)) {
+            (new Tag())->tagUsers($photoId, $taggedUserIds);
+            Session::flash('success', 'Tags were added to the photo.');
+        }
+
+        redirect('/photo/' . $photoId . '#tags');
     }
 
     public function delete($id)

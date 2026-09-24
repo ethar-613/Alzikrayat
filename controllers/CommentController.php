@@ -1,6 +1,7 @@
-<!-- Adds a comment to a photo. Only logged-in users can comment -->
-
 <?php
+/**
+ * Adds a comment to a photo. Only logged-in users can comment
+ */
 
 class CommentController extends Controller
 {
@@ -23,10 +24,18 @@ class CommentController extends Controller
         $errors = Validator::comment($input);
 
         if (!empty($errors)) {
+            $currentUser = Auth::user();
+            $taggableUsers = array();
+            if ($currentUser !== null && (int) $photo['user_id'] === (int) $currentUser['id']) {
+                $taggableUsers = (new User())->allExcept((int) $currentUser['id']);
+            }
+
             $this->render('photos/show', array(
                 'title' => $photo['title'],
                 'photo' => $photo,
                 'comments' => (new Comment())->forPhoto($photoId),
+                'taggedUsers' => (new Tag())->forPhoto($photoId),
+                'taggableUsers' => $taggableUsers,
                 'errors' => $errors,
             ));
             return;

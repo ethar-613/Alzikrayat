@@ -38,6 +38,43 @@ a{
     color: white;
 }
 
+#userNameNav{
+    font-weight: bold; 
+    padding:5px;
+    font-size: 18px;
+    background-image: linear-gradient(to bottom ,#a8a6f1,  #fad6df);
+    box-shadow:  1px 1px 0px 0px rgb(244, 241, 251) inset ;
+    filter: brightness(90%);
+    transition: .5s ease-in-out;
+    color: white;
+
+}
+
+#userNameNav:hover{
+    filter: brightness(110%); 
+    box-shadow: 2px 3px 10px 1px rgb(219, 210, 244), -2px -2px 10px 1px rgb(219, 210, 244) , 1px 1px 0px 0px rgb(244, 241, 251) inset ;
+}
+
+#sharingbtn{
+    border: 0.25em solid var(--glow-color);
+    padding: 5px;
+    color: var(--glow-color);
+    font-size: 15px;
+    font-weight: bold;
+    background-color: var(--btn-color);
+    border-radius: 12px;
+    outline: none;
+    box-shadow: 0 0 1em 0.25em var(--glow-color) ,  inset 0 0 0.5em 0.2em var(--glow-color);
+    text-shadow: 0 0 0.5em var(--glow-color); 
+}
+#sharingbtn:hover{
+    color: var(--btn-color);
+    background-color: var(--glow-color);
+    box-shadow:  0 0 4em 0.3em var(--glow-spread-color) , inset 0 0 0.75em 0.25em var(--glow-color);
+}
+
+
+
 
 .hero-section,
 .inner-hero {
@@ -204,6 +241,19 @@ a{
     border-bottom: 1px solid #eee;
 }
 
+.comment-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 2.2rem;
+    height: 2.2rem;
+    color: #fff;
+    background: #6c757d;
+    border-radius: 50%;
+    font-size: .85rem;
+    font-weight: 700;
+}
 
 /* Upload page image preview */
 .upload-preview canvas {
@@ -224,6 +274,13 @@ a{
     border-radius: 4px;
 }
 
+/* Novelty feature: tag-people checklist on upload and photo detail pages */
+.tag-checklist {
+    max-height: 160px;
+    overflow-y: auto;
+    background: #fff;
+}
+
 .site-footer {
     padding: 1.5rem 0;
     margin-top: 2em;
@@ -238,6 +295,8 @@ a{
     padding: 4rem 0;
     text-align: center;
 }
+
+
 
 @media (max-width: 767.98px) {
     .gallery-style-grid-3,
@@ -262,3 +321,4 @@ a{
         grid-template-columns: 1fr;
     }
 }
+

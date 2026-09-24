@@ -1,8 +1,10 @@
-<!-- this is the Data Tier
- Single shared PDO connection for the whole app 
-  Models use this connection directly with parameterized queries -->
-
 <?php
+/**
+ * this is the Data Tier
+ * Single shared PDO connection for the whole app 
+ * Models use this connection directly with parameterized queries
+ */
+
 
 class Database
 {

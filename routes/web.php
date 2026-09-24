@@ -1,6 +1,7 @@
-<!-- All application routes, registered by hand, mine -->
-
 <?php
+/**
+ * All application routes, registered by hand (no framework routing).
+ */
 
 $router = new Router();
 
@@ -13,9 +14,12 @@ $router->add('GET', '/register', array('AuthController', 'showRegister'));
 $router->add('POST', '/register', array('AuthController', 'register'));
 $router->add('POST', '/logout', array('AuthController', 'logout'));
 
+$router->add('GET', '/user/{id}', array('UserController', 'show'));
+
 $router->add('GET', '/photos', array('PhotoController', 'index'));
 $router->add('GET', '/photo/create', array('PhotoController', 'create'));
 $router->add('POST', '/photo/store', array('PhotoController', 'store'));
 $router->add('GET', '/photo/{id}', array('PhotoController', 'show'));
 $router->add('POST', '/photo/{id}/delete', array('PhotoController', 'delete'));
+$router->add('POST', '/photo/{id}/tags', array('PhotoController', 'addTags'));
 $router->add('POST', '/photo/{id}/comments', array('CommentController', 'store'));

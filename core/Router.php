@@ -1,8 +1,10 @@
-<!-- this is the manual router 
-  Routes are registered with add() and matched against the request path using regular expressions, 
-  every "{param}" in a route path becomes a regex group that captures whatever value is in the URL. -->
-
 <?php
+/**
+ * The manual router 
+ * Routes are registered with add() and matched against the request path
+ * using regular expressions, the same way it's shown in the course slides:
+ * every "{param}" in a route path becomes a regex group that captures whatever value is in the URL.
+ */
 
 class Router
 {

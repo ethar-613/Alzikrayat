@@ -1,9 +1,8 @@
-<!-- Base Controller class.
-  Handles rendering a view file inside the common page layout, and stores
-  a few small helper methods used by all the controllers -->
-
 <?php
-
+/**
+ * The Base Controller class
+ * Handles rendering a view file inside the common page layout, and stores a few small helper methods used by all the controllers
+ */
 
 abstract class Controller
 {

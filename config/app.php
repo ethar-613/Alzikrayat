@@ -1,8 +1,10 @@
-<!--   Basic app configuration and paths
-  Database settings can come from environment variables, but they default
-  to the usual XAMPP local values so the project runs out of the box -->
-
 <?php
+/**
+ * Basic app configuration and paths
+  * Database settings can come from environment variables, but they default
+  * to the usual XAMPP local values so the project runs out of the box
+ */
+ 
  
 
 define('APP_NAME', 'Alzikrayat');

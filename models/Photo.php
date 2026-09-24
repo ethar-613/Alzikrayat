@@ -1,7 +1,7 @@
-<!--  Photo model, handles all SQL for the photos table. -->
-
 <?php
-
+/**
+ * Photo model, handles all SQL for the photos table.
+ */
 
 class Photo extends Model
 {
@@ -77,5 +77,22 @@ class Photo extends Model
         $statement->execute(array('user_id' => $userId));
 
         return (int) $statement->fetchColumn();
+    }
+
+    // All photos uploaded by one user, newest first - used on the profile page
+    public function byUser($userId)
+    {
+        $statement = $this->database->prepare(
+            'SELECT photos.id, photos.user_id, photos.file_name, photos.title,
+                    photos.description, photos.date_time,
+                    users.first_name, users.last_name
+             FROM photos
+             INNER JOIN users ON users.id = photos.user_id
+             WHERE photos.user_id = :user_id
+             ORDER BY photos.date_time DESC'
+        );
+        $statement->execute(array('user_id' => $userId));
+
+        return $statement->fetchAll();
     }
 }

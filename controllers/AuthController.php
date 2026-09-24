@@ -1,7 +1,7 @@
-<!-- Handles registration, login, logout and the "last login" cookie -->
-
-
-<?php 
+<?php
+/** 
+  * Handles registration, login, logout and the "last login" cookie
+ */
 
 class AuthController extends Controller
 {

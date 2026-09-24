@@ -1,6 +1,7 @@
-<!-- Comment model, handles all SQL for the comments table -->
-
 <?php
+/**
+ * Comment model, handles all SQL for the comments table
+ */
 
 class Comment extends Model
 {

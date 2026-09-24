@@ -1,7 +1,7 @@
-<!-- this is the Front controller, every request comes through this one file first -->
-
 <?php
-
+/**
+ * Front controller, every request comes through this one file first.
+ */
 
 require_once dirname(__DIR__) . '/config/app.php';
 require_once dirname(__DIR__) . '/config/database.php';

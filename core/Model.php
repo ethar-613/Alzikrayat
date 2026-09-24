@@ -1,9 +1,9 @@
-<!--  Base Model class.
- Every entity model (User, Photo, Comment) extends this so they all share
- the same database connection without opening a new one each time -->
-
 <?php
-
+/**
+ * Base Model class.
+ * Every entity model (User, Photo, Comment) extends this so they all share
+ * the same database connection without opening a new one each time.
+ */
 
 abstract class Model
 {
