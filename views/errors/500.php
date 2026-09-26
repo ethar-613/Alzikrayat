@@ -11,7 +11,8 @@
 </head>
 <body class="error-page">
     <div class="container">
-        <h1>Something went wrong.</h1>
+        <h1>500</h1>
+        <h2>Something went wrong.</h2>
         <p><?= e($errorDetail) ?></p>
         <a class="btn btn-primary" href="<?= e(url('/')) ?>">Return home</a>
     </div>
