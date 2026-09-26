@@ -6,6 +6,8 @@
 class Comment extends Model
 {
     // All comments for one photo, oldest first, with the commenter's name
+    // pass photo id that want to get its comment 
+    // return array of the comments data from the table. and user name that write this comment 
     public function forPhoto($photoId)
     {
         $statement = $this->database->prepare(
@@ -21,6 +23,9 @@ class Comment extends Model
         return $statement->fetchAll();
     }
 
+    // create comment data to save on comment table
+    // pass input data array that have the comment itself , photo id and user id.
+    // return the id of this comment to display it immediatly on the page
     public function create($input)
     {
         $statement = $this->database->prepare(
@@ -36,6 +41,7 @@ class Comment extends Model
         return (int) $this->database->lastInsertId();
     }
 
+    // return the number of the comments on the website to display it with statistics on the home page
     public function count()
     {
         return (int) $this->database->query('SELECT COUNT(*) FROM comments')->fetchColumn();

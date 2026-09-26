@@ -1,3 +1,6 @@
+<!-- about the project page content -->
+
+<!-- small description about the project -->
 <section class="inner-hero">
     <div class="container">
         <h1>About Alzikrayat</h1>
@@ -5,6 +8,7 @@
     </div>
 </section>
 
+<!-- what the project and what the users can do -->
 <section class="container section-padding">
     <div class="row g-5 align-items-start">
         <div class="col-lg-7">
@@ -25,6 +29,7 @@
     </div>
 </section>
 
+<!-- about project building -->
 <section class="container section-padding pt-0">
     <h2 class="section-title mb-3">How it's built</h2>
     <div class="row g-4">

@@ -1,3 +1,6 @@
+<!-- User Profile page content -->
+
+<!-- top section display this user information -->
 <section class="inner-hero">
     <div class="container">
         <h1 class="mb-1"><?= e((string) $profileUser['first_name']) ?> <?= e((string) $profileUser['last_name']) ?></h1>
@@ -13,6 +16,7 @@
     </div>
 </section>
 
+<!-- display the photos that this user uploaded , and the photos other user tagged him in -->
 <section class="container section-padding">
     <h2 class="section-title mb-3">Photos by <?= e((string) $profileUser['first_name']) ?> (<?= e((string) count($ownPhotos)) ?>)</h2>
 

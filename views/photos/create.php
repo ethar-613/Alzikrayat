@@ -1,3 +1,5 @@
+<!-- Photo upload page content -->
+
 <section class="container section-padding">
     <div class="row justify-content-center">
         <div class="col-lg-8">

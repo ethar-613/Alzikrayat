@@ -1,10 +1,16 @@
 <?php
 /**
- * Adds a comment to a photo. Only logged-in users can comment
+ * Adds a comment to a photo. Only logged-in users can comment.
  */
 
 class CommentController extends Controller
 {
+    // add comment to a photo
+    // pass photo id that want to put comment for it 
+    // check authentication and csrf tokens and the id it its number greater or equal to 1 
+    //  get the photo metadata by the id.
+    // put the input comment on array $input and check its validaty. if there error then rerender the page
+    // if valid then show success message and display the comment immediatly
     public function store($id)
     {
         Auth::requireAuth();

@@ -1,10 +1,15 @@
 <?php
-/** 
-  * Handles registration, login, logout and the "last login" cookie
+/**
+ * Handles registration, login, logout and the "last login" cookie.
  */
 
+// this class handle all the authentication logic: desplay a form , and all about register-login-logout-last Login cookie
 class AuthController extends Controller
 {
+    // used to show the Login page for the user if they guest but if not then return him to gallery page
+    // if its really a guest it will show login page and send the data with it to display in the page
+    // read the last_login cookie to display it in login form for user
+    // and empty errors array cuz no errors yet its the first go to the page
     public function showLogin()
     {
         Auth::requireGuest();
@@ -16,6 +21,7 @@ class AuthController extends Controller
         ));
     }
 
+    // This is do the same thing as showLogin() but for register page and without last login cookie
     public function showRegister()
     {
         Auth::requireGuest();
@@ -26,6 +32,11 @@ class AuthController extends Controller
         ));
     }
 
+    // handle the login. 
+    // check if they guest first then verify the csrf token. then read email and password sent with the request
+    // check if inputes validate and return any error found 
+    // check if the user with this email is exists and the password match
+    // if all true then log user in and set last_login cookie and redirect him to the gallery
     public function login()
     {
         Auth::requireGuest();
@@ -41,7 +52,7 @@ class AuthController extends Controller
             Session::set('old_input', array('email' => $input['email']));
             $this->render('auth/login', array(
                 'title' => 'Welcome back',
-                'errors' => $errors,
+                'errors' => $errors, 
                 'lastLogin' => isset($_COOKIE['last_login']) ? $_COOKIE['last_login'] : null,
             ));
             return;
@@ -69,6 +80,10 @@ class AuthController extends Controller
         redirect('/photos');
     }
 
+    // handle register for new users
+    // check if they guest first then verify the csrf token. get all input from user by input() and put it in array
+    // validate them and check errors. if no errors and this email alreay exists then add email error to the error array 
+    // then check the error array and if there no error then create the user row at the database and show successs message and redirect to login page
     public function register()
     {
         Auth::requireGuest();
@@ -108,6 +123,9 @@ class AuthController extends Controller
         redirect('/login');
     }
 
+    // handle logout for logged in user
+    // check / verify the csrf token. then logout by destroing the session.
+    // and start the session to show success message and redirect to the main
     public function logout()
     {
         verifyCsrf();

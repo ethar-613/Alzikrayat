@@ -3,9 +3,13 @@
  * Tag model, lets a user tag other registered users
  */
 
+// handles all SQL for the photo_tags table
 class Tag extends Model
 {
     // Every user tagged in one photo, with their name, newest first
+    // to display the tags on photo details page 
+    // pass photo id that want to show ots details
+    // return array contain all users tagged in this photo (thier id and first and last name)
     public function forPhoto($photoId)
     {
         $statement = $this->database->prepare(
@@ -22,6 +26,8 @@ class Tag extends Model
 
     // Tags a list of user IDs in one photo. Already-tagged users and
     // unknown IDs are simply skipped instead of raising an error.
+    // pass photo id and user ids that want to tag in this photo
+    // and if there any non expected insert came it will be 0 and skipped  
     public function tagUsers($photoId, $userIds)
     {
         $statement = $this->database->prepare(
@@ -37,6 +43,8 @@ class Tag extends Model
     }
 
     // Every photo one user has been tagged in, newest first - used on the profile page
+    // pass the user id 
+    // return array have all the photo metadat that this user have his name tagged in 
     public function photosForUser($userId)
     {
         $statement = $this->database->prepare(

@@ -296,8 +296,6 @@ a{
     text-align: center;
 }
 
-
-
 @media (max-width: 767.98px) {
     .gallery-style-grid-3,
     .gallery-style-grid-4,
@@ -322,3 +320,55 @@ a{
     }
 }
 
+/* Dark mode: Bootstrap's own components adapt automatically via
+   data-bs-theme, but the custom classes above have hardcoded light colors
+   and need their own dark-mode variants. */
+[data-bs-theme="dark"] body {
+    background-color: #12141a;
+    color: #e9ecef;
+}
+
+[data-bs-theme="dark"] a {
+    color: #f2f1fc;
+}
+
+[data-bs-theme="dark"] .hero-section,
+[data-bs-theme="dark"] .inner-hero,
+[data-bs-theme="dark"] .auth-page {
+    background-color: #1a1d24;
+    border-bottom-color: #30333b;
+}
+
+[data-bs-theme="dark"] .auth-box,
+[data-bs-theme="dark"] .photo-card,
+[data-bs-theme="dark"] .about-card,
+[data-bs-theme="dark"] .tag-checklist,
+[data-bs-theme="dark"] .empty-state {
+    background-color: #1f232b;
+    border-color: #30333b;
+    color: #e9ecef;
+}
+
+[data-bs-theme="dark"] .photo-card-body p,
+[data-bs-theme="dark"] .photo-list-description,
+[data-bs-theme="dark"] .stat-row {
+    color: #adb5bd;
+}
+
+[data-bs-theme="dark"] .photo-card-image,
+[data-bs-theme="dark"] .detail-image-frame,
+[data-bs-theme="dark"] .upload-preview canvas {
+    background-color: #2a2d35;
+}
+
+[data-bs-theme="dark"] .comment-item {
+    border-bottom-color: #30333b;
+}
+
+[data-bs-theme="dark"] .site-footer {
+    color: #adb5bd;
+}
+
+[data-bs-theme="dark"] #themeToggle {
+    border-color: rgba(255, 255, 255, 0.4);
+}

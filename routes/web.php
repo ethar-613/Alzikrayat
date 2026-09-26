@@ -1,9 +1,14 @@
 <?php
 /**
  * All application routes, registered by hand (no framework routing).
+ * connect every HTTP method + URL path with the controller and function that responsible for it 
  */
 
+
+//create a router object. will save all the routes and then match them at runtime
 $router = new Router();
+
+// adding routes to the router object, also its added in specific order
 
 $router->add('GET', '/', array('HomeController', 'index'));
 $router->add('GET', '/about', array('HomeController', 'about'));

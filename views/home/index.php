@@ -1,18 +1,24 @@
+<!-- Home Page Content -->
+
+<!-- display little description about the website and statistics from it (number of users, photos and comments)  and two buttons to navigate -->
 <section class="hero-section">
     <div class="container">
         <h1>Alzikrayat</h1>
-        <p class="lead">Photo sharing website to Keep the ordinary moments extraordinary. you can Upload your photos, share them with everyone, and leave comments on photos you like.</p>
+        <p class="lead">Photo sharing website to Keep the ordinary moments extraordinary. 
+            you can Upload your photos, share them with everyone, and leave comments on photos you like.</p>
         <div class="d-flex flex-wrap gap-3 mt-3">
             <a class="btn btn-primary btn-lg" href="<?= e(url('/photos')) ?>" style="background-color:#8929f7;">View Gallery</a>
             <a class="btn btn-outline-secondary btn-lg" href="<?= e(url('/about')) ?>">About Us</a>
         </div>
         <div class="d-flex flex-wrap gap-4 mt-4 stat-row">
-            <div><strong><?= e((string) $photoCount) ?></strong> photos</div>
             <div><strong><?= e((string) $userCount) ?></strong> users</div>
+            <div><strong><?= e((string) $photoCount) ?></strong> photos</div>
+            <div><strong><?= e((string) $commentCount) ?></strong> comments</div>
         </div>
     </div>
 </section>
 
+<!-- here contain latest photos in the website as a glance -->
 <section class="container section-padding">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-3">
         <h2 class="section-title mb-0">Latest Photos</h2>

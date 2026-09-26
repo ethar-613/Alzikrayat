@@ -1,3 +1,5 @@
+<!-- Login Page content -->
+
 <section class="auth-page">
     <div class="container">
         <div class="row justify-content-center">
@@ -13,6 +15,7 @@
                         <div class="alert alert-danger"><?= e($errors['general']) ?></div>
                     <?php endif; ?>
 
+                    <!-- this is the login form -->
                     <form method="post" action="<?= e(url('/login')) ?>" data-validate-form novalidate>
                         <?= csrfField() ?>
                         <div class="mb-3">

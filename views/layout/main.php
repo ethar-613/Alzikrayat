@@ -1,3 +1,6 @@
+<!-- the main Layout for the application -->
+ <!-- contain the header and footer that will appear for all pages in the app -->
+
 <!DOCTYPE html>
 <?php $currentTheme = isset($_COOKIE['theme']) && $_COOKIE['theme'] === 'dark' ? 'dark' : 'light'; ?>
 <html lang="en" data-bs-theme="<?= e($currentTheme) ?>">
@@ -10,6 +13,7 @@
     <link href="<?= e(asset('css/app.css')) ?>" rel="stylesheet">
 </head>
 <body>
+    <!-- the main navigater on the app -->
     <nav class="navbar navbar-expand-lg navbar-dark site-navbar">
         <div class="container">
             <a class="navbar-brand" href="<?= e(url('/')) ?>">
@@ -30,7 +34,7 @@
                         <span id="themeToggleIcon"><?= $currentTheme === 'dark' ? '☀️' : '🌙' ?></span>
                     </button>
                     <?php if ($currentUser !== null): ?>
-                        <span class="d-none d-xl-inline me-2">Hi <a class="text-decoration-none text-dark rounded-pill" id="userNameNav" href="<?= e(url('/user/' . $currentUser['id'])) ?>" >
+                        <span class=" me-2">Hi <a class="text-decoration-none text-dark rounded-pill" id="userNameNav" href="<?= e(url('/user/' . $currentUser['id'])) ?>" >
                             <?= e($currentUser['first_name']) ?>
                             </a></span>
                         <a class="btn btn-primary btn-sm shareBTN" id="sharingbtn" href="<?= e(url('/photo/create')) ?>" >Share Memory :></a>
@@ -48,6 +52,7 @@
         </div>
     </nav>
 
+    <!-- here desplaying the main content of the page. if there any flash message will show before the content  -->
     <main>
         <?php if ($successMessage !== null): ?>
             <div class="container pt-4">
@@ -62,6 +67,7 @@
         <?= $content ?>
     </main>
 
+    <!-- the main footer of the app -->
     <footer class="site-footer" >
         <div class="container d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2">
             <div>Alzikrayat - Photo Sharing App</div>
@@ -71,6 +77,7 @@
         </div>
     </footer>
 
+    <!-- calling the js code and bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="<?= e(asset('js/validation.js')) ?>"></script>
 </body>

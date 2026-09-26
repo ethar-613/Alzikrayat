@@ -3,10 +3,21 @@
  *
  * HTML5 attributes remain active; this script adds friendly feedback for
  * empty fields and prevents accidental duplicate submissions.
+ * 
+ * it also handle filter image canvas feature
+ * and Dark/Light feature
  */
+
+
 (function () {
     'use strict';
 
+    /* here it check for the client-side validity of data
+       it take every form that have the property [data-validate-form] to check its input when submit
+       then check every input, textarea, select.  with checkValidity() that automatically validate against 
+       any HTML5 attribute present on the field itself.
+       and use firstInvalid to store only the first invalid field to direct user attention to the nearest issue to fix first
+       rather than overwlem them with multiple messages at once */
     document.querySelectorAll('[data-validate-form]').forEach(function (form) {
         form.addEventListener('submit', function (event) {
             var firstInvalid = null;
@@ -17,6 +28,11 @@
                     firstInvalid = field;
                 }
             });
+
+            /* if found invalid field it will pervent form submitted, 
+               and add css class "is-invalid" that turn the field to red, and focus on it
+               so the user can see immediatly where the problem in.
+               if everything is valid then disable submit button and change it to 'Saving..' */
 
             if (firstInvalid) {
                 event.preventDefault();
@@ -32,6 +48,7 @@
             }
         });
 
+        // when user still typing and the field is valid now remove the red color immediatly as feedback means its good now
         form.querySelectorAll('input, textarea, select').forEach(function (field) {
             field.addEventListener('input', function () {
                 if (field.checkValidity()) {
@@ -41,6 +58,8 @@
         });
     });
 
+
+    
     /* Novelty feature: a canvas-based photo filter.
        The chosen filter is shown as a live preview, and is then "baked"
        into the actual file before it is uploaded, so the stored photo
@@ -63,15 +82,19 @@
             var green = pixels.data[index + 1];
             var blue = pixels.data[index + 2];
 
+            // this is the grayscale filter that using the true luminosity equation here
             if (filterName === 'mono') {
                 var gray = (red * 0.299) + (green * 0.587) + (blue * 0.114);
                 pixels.data[index] = gray;
                 pixels.data[index + 1] = gray;
                 pixels.data[index + 2] = gray;
+            // the warm filter that increase the red more than the green and reduced the blue 
+            // used Math.min Math.max to prevent overflow/underflow  
             } else if (filterName === 'warm') {
                 pixels.data[index] = Math.min(255, red + 18);
                 pixels.data[index + 1] = Math.min(255, green + 7);
                 pixels.data[index + 2] = Math.max(0, blue - 12);
+            // for soft filter reduce contrast and increase brightness
             } else if (filterName === 'soft') {
                 pixels.data[index] = Math.min(255, (red * 0.82) + 34);
                 pixels.data[index + 1] = Math.min(255, (green * 0.82) + 34);
@@ -81,7 +104,7 @@
 
         return pixels;
     }
-
+    // to draw preview for the image on upload page
     function drawPreview(filterName) {
         if (!canvas || !originalPixels) {
             return;
@@ -173,9 +196,8 @@
         });
     }
 
-
-    /* Dark / Light mode toggle.
-       Bootstrap 5.3's color modes are driven entirely by the data-bs-theme
+    /* Dark / Light mode toggle
+       Bootstrap 5 color modes are driven entirely by the data-bs-theme
        attribute on <html>. The server already reads the "theme" cookie and
        sets that attribute on first render (views/layout/main.php), so there
        is no flash of the wrong theme -- this click handler only needs to
@@ -197,7 +219,4 @@
             document.cookie = 'theme=' + nextTheme + '; path=/; max-age=' + oneYearInSeconds + '; samesite=lax';
         });
     }
-    
 })();
-
-

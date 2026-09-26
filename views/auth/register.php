@@ -1,3 +1,6 @@
+<!-- register Page content -->
+
+
 <section class="auth-page">
     <div class="container">
         <div class="row justify-content-center">
@@ -6,6 +9,7 @@
                     <h1 class="mb-3">Create an Account</h1>
                     <p class="text-muted">Already a member? <a href="<?= e(url('/login')) ?>">Log in instead</a>.</p>
 
+                    <!-- this is the register form  -->
                     <form method="post" action="<?= e(url('/register')) ?>" data-validate-form novalidate>
                         <?= csrfField() ?>
                         <div class="row g-3">

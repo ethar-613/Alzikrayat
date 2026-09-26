@@ -1,3 +1,5 @@
+<!-- photo details show page conecnt -->
+
 <?php
 // Only show the delete button to the person who actually owns this photo
 $isOwner = $currentUser !== null && (int) $currentUser['id'] === (int) $photo['user_id'];
@@ -55,6 +57,7 @@ $isOwner = $currentUser !== null && (int) $currentUser['id'] === (int) $photo['u
         </div>
     </div>
 
+    <!-- this to handle the comments section under the photo -->
     <div class="row justify-content-center mt-5 pt-3" id="comments">
         <div class="col-lg-8">
             <h2 class="section-title mb-3">Comments (<?= e((string) count($comments)) ?>)</h2>
@@ -67,7 +70,13 @@ $isOwner = $currentUser !== null && (int) $currentUser['id'] === (int) $photo['u
                         <div class="comment-item">
                             <div class="comment-avatar"><?= e(strtoupper(substr((string) $comment['first_name'], 0, 1))) ?></div>
                             <div>
-                                <div><strong><a href="<?= e(url('/user/' . $comment['user_id'])) ?>"><?= e((string) $comment['first_name']) ?> <?= e((string) $comment['last_name']) ?></a></strong> <small class="text-muted"><?= e(date('M j, Y g:i a', strtotime((string) $comment['date_time']))) ?></small></div>
+                                <div><strong>
+                                    <a href="<?= e(url('/user/' . $comment['user_id'])) ?>">
+                                        <?= e((string) $comment['first_name']) ?> <?= e((string) $comment['last_name']) ?>
+                                    </a>
+                                </strong> 
+                                    <small class="text-muted"><?= e(date('M j, Y g:i a', strtotime((string) $comment['date_time']))) ?></small>
+                                </div>
                                 <p class="mb-0"><?= nl2br(e((string) $comment['comment'])) ?></p>
                             </div>
                         </div>

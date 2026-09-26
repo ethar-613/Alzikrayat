@@ -1,3 +1,6 @@
+<!-- Gallery page content -->
+
+<!-- list that contain the grid style for the gallery photos display -->
 <?php
 $styleLabels = [
     'grid-3' => 'Three columns',
@@ -15,6 +18,7 @@ $styleLabels = [
     </div>
 </section>
 
+<!-- let user choose the grid style he want to see the gallery with -->
 <section class="container section-padding">
     <div class="gallery-toolbar d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
         <div>Display style: <strong><?= e($styleLabels[$style]) ?></strong></div>
@@ -25,6 +29,7 @@ $styleLabels = [
         </div>
     </div>
 
+    <!-- if no photos yet, then display this -->
     <?php if ($photos === []): ?>
         <div class="empty-state">
             <h2>No photos yet.</h2>
@@ -35,6 +40,7 @@ $styleLabels = [
                 <a class="btn btn-primary" href="<?= e(url('/photo/create')) ?>">Upload a photo</a>
             <?php endif; ?>
         </div>
+    <!-- if there photos uploaded then display them using the style that user choose -->
     <?php else: ?>
         <div class="gallery-grid gallery-style-<?= e($style) ?>">
             <?php foreach ($photos as $photo): ?>
