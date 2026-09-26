@@ -21,7 +21,7 @@ class PhotoController extends Controller
 
         $this->render('photos/index', array(
             'title' => 'Community gallery',
-            'photos' => (new Photo())->latest(9),
+            'photos' => (new Photo())->latest(50),
             'style' => $style,
         ));
     }
